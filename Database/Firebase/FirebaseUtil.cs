@@ -34,14 +34,22 @@ namespace GATE_SCAN2.Database.Firebase
         }
         public string getVersion()
         {
+            try
+            {
+
+            }
+            catch (Exception)
+            {
+                
+            }
             FirebaseResponse res = cl.Get(@"Version");
             if (res.Body.Equals("null")) return "";
             return res.ResultAs<string>();
         }
 
-        public bool checkUser(string id,string secretNum)
+        public async Task<bool> checkUser(string id,string secretNum)
         {
-            FirebaseResponse res = cl.Get(@"User/information/parkingMan/" + id+ "/secretNum");
+            FirebaseResponse res = await cl.GetAsync(@"User/information/parkingMan/" + id+ "/secretNum");
             if (res.Body.Equals("null")) return false;
             string sc = res.ResultAs<string>();
             Console.WriteLine(sc);
@@ -75,6 +83,13 @@ namespace GATE_SCAN2.Database.Firebase
             if (res.Body.Equals("null")) return -1;
             return res.ResultAs<double>();
         }
+        public async Task<int> getPosition(string id)
+        {
+            FirebaseResponse res = await cl.GetAsync(@"User/information/parkingMan/" + id + "/position");
+            if (res.Body.Equals("null")) return -1;
+            return res.ResultAs<int>();
+        }
+
         public bool payMoney(string id,double payMoney)
         {
             int position = getPositionUser(id);
@@ -112,9 +127,10 @@ namespace GATE_SCAN2.Database.Firebase
             cl.Push(@"History/parkingMan/moneyOut/" + id,his);
             return true;
         }
-        public int pushUserIn(UserDTO user)
+        public async Task<int> pushUserIn(UserDTO user)
         {
             if (checkParking(user.id,user.block)) return 2; //dang do
+            user.position = await getPosition(user.id) + "";
             FirebaseResponse res = cl.Update(@"APIParking/Parking/InfoList/" + user.block + "/" + user.id,user);
             FirebaseResponse resId = cl.Set(@"APIParking/Parking/IdList/" + user.block + "/" + user.id,user.id);
             if (res.Body.Equals("null")) return 0; // Loi add
@@ -129,13 +145,29 @@ namespace GATE_SCAN2.Database.Firebase
             if (resId.Body.Equals("null")) return false; // Loi dlt
             return true;
         }
-
+        public async Task<bool> isInOK(string id,int block)
+        {
+            FirebaseResponse res = await cl.GetAsync(@"APIParking/Parking/InfoList/" + block + "/" + id + "/isInOK");
+            if (res.Body.Equals("null")) return false;
+            return res.ResultAs<bool>();
+        }
         public string getPlate(string id,int block)
         {
             FirebaseResponse res = cl.Get(@"APIParking/Parking/InfoList/" + block + "/" + id + "/txtPlate");
             if (res.Body.Equals("null")) return "";
             return res.ResultAs<string>();
         }
+       
+        public async Task<bool> checkSamePlate(string id,int block,string newPlate)
+        {
+            FirebaseResponse res = await cl.GetAsync(@"APIParking/Parking/InfoList/" + block + "/" + id + "/txtPlate");
+            if (res.Body.Equals("null")) return false;
+
+            if (!newPlate.Equals(res.ResultAs<string>())) return false;
+
+            return true;
+        }
+        
         public int pushUserOut(UserDTO user, double money,Label lbMess)
         {
            
@@ -156,7 +188,7 @@ namespace GATE_SCAN2.Database.Firebase
             //Bất đồng bộ xử lý 2 cái này để giảm thời gian UI
             Thread t = new Thread(() => {
                 payMoney(user.id,money);
-                addHistory(user.id, user.txtPlate, money, user.block);
+                addHistory(user.id, user.txtPlate, int.Parse(user.position)==3 ? money:0, user.block);
                 removeUserIn(user.id, user.block);
             });
             t.Start();

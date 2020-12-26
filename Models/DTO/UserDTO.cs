@@ -13,6 +13,7 @@ namespace GATE_SCAN2.Models.DTO
         public string idT { get; set; }
         public bool parking { get; set; } = true;
        public string name { get; set; }
+        public string position { get; set; }
 
         //0 là đang chờ bảo vệ accept
         //1 là bảo vệ k cho qua
@@ -41,5 +42,8 @@ namespace GATE_SCAN2.Models.DTO
         public string dateSend { get; set; } = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         public string txtPlate { get; set; } = "none";
 
+
+        //Nếu đi vào không có lỗi thì true, ngược lại
+        public bool isInOK { get; set; } = true;
     }
 }

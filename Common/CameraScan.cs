@@ -39,7 +39,15 @@ namespace GATE_SCAN2.Common
 
             private void VideoSource_NewFrame(object sender, AForge.Video.NewFrameEventArgs eventArgs)
             {
+            try
+            {
                 this.pbCam.Image = (Bitmap)eventArgs.Frame.Clone();
+            }
+            catch (Exception)
+            {
+
+            }
+               
             }
 
             public Bitmap capture()
