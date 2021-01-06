@@ -42,13 +42,23 @@
     <Reference Include="AForge.Video.DirectShow, Version=2.2.5.0, Culture=neutral, PublicKeyToken=61ea4348d43881b7, processorArchitecture=MSIL">
       <HintPath>..\packages\AForge.Video.DirectShow.2.2.5\lib\AForge.Video.DirectShow.dll</HintPath>
     </Reference>
+    <Reference Include="Emgu.CV">
+      <HintPath>..\..\..\APP FINAL\DSParking\DSParking\bin\x86\Debug\Emgu.CV.dll</HintPath>
+    </Reference>
+    <Reference Include="Emgu.CV.UI">
+      <HintPath>..\..\..\APP FINAL\DSParking\DSParking\bin\x86\Debug\Emgu.CV.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Emgu.Util">
+      <HintPath>..\..\..\APP FINAL\DSParking\DSParking\bin\x86\Debug\Emgu.Util.dll</HintPath>
+    </Reference>
     <Reference Include="Firebase.Storage, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\FirebaseStorage.net.1.0.3\lib\netstandard1.1\Firebase.Storage.dll</HintPath>
     </Reference>
     <Reference Include="FireSharp, Version=2.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\FireSharp.2.0.4\lib\portable-net45+sl5+wp8+win8\FireSharp.dll</HintPath>
     </Reference>
-    <Reference Include="IPSSbike">
+    <Reference Include="IPSSbike, Version=0.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\CODE NEW\IPSSbike\windows\bin\ExampleCs\IPSSbike.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -70,6 +80,9 @@
     </Reference>
     <Reference Include="shortid, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\shortid.3.0.0\lib\netstandard2.0\shortid.dll</HintPath>
+    </Reference>
+    <Reference Include="SVM">
+      <HintPath>..\..\..\APP FINAL\DSParking\DSParking\bin\x86\Debug\SVM.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.AppContext, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -215,6 +228,9 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
+    <Reference Include="TGMTbike">
+      <HintPath>..\..\..\APP FINAL\DSParking\DSParking\bin\x86\Debug\TGMTbike.dll</HintPath>
+    </Reference>
     <Reference Include="zxing, Version=0.16.6.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
       <HintPath>..\packages\ZXing.Net.0.16.6\lib\net47\zxing.dll</HintPath>
     </Reference>
@@ -225,6 +241,7 @@
   <ItemGroup>
     <Compile Include="Common\CameraScan.cs" />
     <Compile Include="Common\GetImgUrl.cs" />
+    <Compile Include="Common\LicensePlateUtil.cs" />
     <Compile Include="Database\Firebase\FirebaseUtil.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

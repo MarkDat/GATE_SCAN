@@ -27,7 +27,7 @@ namespace GATE_SCAN2
         {
             InitializeComponent();
             camQR = new CameraScan(cbbQr, 0, pbCamQr);
-            cam = new CameraScan(cbbCam, 0, pbCam); //Chỗ này điền 2
+            cam = new CameraScan(cbbCam, 2, pbCam); //Chỗ này điền 2
             fb = new FirebaseUtil();
 
             _sScan.SoundLocation = Application.StartupPath + @"\asset\song\scan.wav";
@@ -253,7 +253,7 @@ namespace GATE_SCAN2
             //check parking
             _isParking = fb.checkParking(_qr[0], BLOCK);
             if (_lineInOut==1 && _isParking) { messNoti("You are parking !", false); _stopScan = false; reset(); return; }
-
+            if(_lineInOut==0 && !_isParking) { messNoti("You are not parking here!", false); _stopScan = false; reset(); return; }
 
             bool isInOK = true;
             //check valid license plate
